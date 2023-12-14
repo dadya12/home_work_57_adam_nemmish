@@ -1,0 +1,104 @@
+[
+{
+  "model": "webapp.type",
+  "pk": 1,
+  "fields": {
+    "name": "Task"
+  }
+},
+{
+  "model": "webapp.type",
+  "pk": 2,
+  "fields": {
+    "name": "Bug"
+  }
+},
+{
+  "model": "webapp.type",
+  "pk": 3,
+  "fields": {
+    "name": "Enhancement"
+  }
+},
+{
+  "model": "webapp.status",
+  "pk": 1,
+  "fields": {
+    "name": "New"
+  }
+},
+{
+  "model": "webapp.status",
+  "pk": 2,
+  "fields": {
+    "name": "In Progress"
+  }
+},
+{
+  "model": "webapp.status",
+  "pk": 3,
+  "fields": {
+    "name": "Done"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 1,
+  "fields": {
+    "summary": "Do home work",
+    "description": "Do my home work 57, becouse i want 10 points",
+    "status": 1,
+    "type": 1,
+    "created_date": "2023-12-14T18:37:27.661Z",
+    "updated_date": "2023-12-14T18:37:27.661Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 2,
+  "fields": {
+    "summary": "Project",
+    "description": "Reboot code, without eny errors in code",
+    "status": 2,
+    "type": 2,
+    "created_date": "2023-12-14T18:39:16.739Z",
+    "updated_date": "2023-12-14T18:39:16.739Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 3,
+  "fields": {
+    "summary": "Project57",
+    "description": "Done my project without erros, and eny trash in code",
+    "status": 3,
+    "type": 3,
+    "created_date": "2023-12-14T18:40:55.294Z",
+    "updated_date": "2023-12-14T18:40:55.294Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 4,
+  "fields": {
+    "summary": "Make dinner",
+    "description": "cookced dinner at 8:00,  for my family and cousins",
+    "status": 2,
+    "type": 1,
+    "created_date": "2023-12-14T18:42:55.579Z",
+    "updated_date": "2023-12-14T18:42:55.579Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 5,
+  "fields": {
+    "summary": "Repair the car",
+    "description": "I'm fixing the car so that it drives well and not just drives, but flies.",
+    "status": 2,
+    "type": 3,
+    "created_date": "2023-12-14T18:47:26.091Z",
+    "updated_date": "2023-12-14T18:47:26.091Z"
+  }
+}
+]
