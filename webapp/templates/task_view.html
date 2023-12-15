@@ -18,7 +18,10 @@
         <div class="card-header bg-transparent border-dark"><b>{{ tasks.summary }}</b></div>
         <div class="card-body">
             <h5 class="card-title">{{ tasks.description }}</h5>
-            <h6 class="card-text">Type: {{ tasks.type.name }}</h6>
+            <h6 class="card-text">Type: {% for type in tasks.type.all %}
+                {{ type.name }}{% if forloop.last %}.{% else %},{% endif %}
+            {% endfor %}
+            </h6>
             <h6 class="card-text">Status: {{ tasks.status.name }}</h6>
         </div>
         <div class="card-footer bg-transparent border-success"><b>{{ tasks.created_date }}</b></div>

@@ -28,14 +28,15 @@ class TaskCreateView(View):
         return render(requset, 'create_task.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = TaskForm(request.POST)
+        form = TaskForm(data=request.POST)
         if form.is_valid():
+            types = form.cleaned_data.pop('type')
             task = Task.objects.create(
                 summary=form.cleaned_data.get('summary'),
                 description=form.cleaned_data.get('description'),
                 status=form.cleaned_data.get('status'),
-                type=form.cleaned_data.get('type'),
             )
+            task.type.set(types)
             return redirect('task_view', pk=task.pk)
         else:
             return render(request, 'create_task.html', {'form': form})
@@ -51,7 +52,7 @@ class TaskUpdateView(TemplateView):
             'summary': task.summary,
             'description': task.description,
             'status': task.status,
-            'type': task.type,
+            'type': task.type.all(),
         })
         context['form'] = form
         return context
@@ -60,10 +61,11 @@ class TaskUpdateView(TemplateView):
         task = get_object_or_404(Task, pk=kwargs.get('pk'))
         form = TaskForm(data=request.POST)
         if form.is_valid():
+            types = form.cleaned_data.pop('type')
             task.summary = form.cleaned_data.get('summary')
             task.description = form.cleaned_data.get('description')
             task.status = form.cleaned_data.get('status')
-            task.type = form.cleaned_data.get('type')
+            task.type.set(types)
             task.save()
             return redirect('home')
         else:

@@ -14,10 +14,5 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ['id', 'name']
     fields = ['name']
 
-@admin.register(Task)
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ['id', 'summary', 'description', 'status', 'type', 'created_date', 'updated_date']
-    list_filter = ['id', 'status', 'type']
-    search_fields = ['id', 'summary']
-    fields = ['summary', 'description', 'status', 'type', 'created_date', 'updated_date']
-    readonly_fields = ['created_date', 'updated_date']
+
+admin.site.register(Task)
