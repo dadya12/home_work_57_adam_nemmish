@@ -63,7 +63,6 @@ class TaskUpdateView(TemplateView):
             task.save()
             return redirect('home')
         else:
-            task.save()
             return render(request, 'update_task.html', {'form': form})
 
 class TaskDeleteView(View):
