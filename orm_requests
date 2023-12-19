@@ -1,0 +1,28 @@
+1 запрос:
+from datetime import datetime, timedelta
+from webapp.models import Task
+
+end_date = datetime.now()
+start_date = end_date - timedelta(days=30)
+
+Task.objects.filter(status__name='Done', updated_date__range=(start_date, end_date))
+<QuerySet [<Task: Task object (3)>]>
+
+2 запрос:
+from webapp.models import Task
+
+specified_status = ['New', 'In Progress']
+specified_types = ['Task', 'Enhancement']
+
+Task.objects.filter(status__name__in=specified_status, type__name__in=specified_types)
+<QuerySet [<Task: Task object (1)>, <Task: Task object (1)>, <Task: Task object (2)>, <Task: Task object (2)>, <Task: Task object (4)>]>
+
+3 запрос:
+from webapp.models import Task
+
+find_type = 'bug'
+
+Task.objects.exclude(status__name='Done').filter(Q(summary__icontains=find_type) | Q(type__name='Bug'))
+<QuerySet [<Task: Task object (1)>, <Task: Task object (2)>, <Task: Task object (5)>]>
+
+
