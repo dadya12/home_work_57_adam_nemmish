@@ -48,6 +48,7 @@
     "summary": "Do home work",
     "description": "Do my home work 57, becouse i want 10 points",
     "status": 1,
+    "project": 1,
     "created_date": "2023-12-14T18:37:27.661Z",
     "updated_date": "2023-12-18T18:26:51.996Z",
     "type": [
@@ -64,6 +65,7 @@
     "summary": "Project12",
     "description": "Reboot code, without eny errors in code",
     "status": 2,
+    "project": 1,
     "created_date": "2023-12-14T18:39:16.739Z",
     "updated_date": "2023-12-19T06:25:16.750Z",
     "type": [
@@ -80,6 +82,7 @@
     "summary": "Project57",
     "description": "Done my project without erros, and eny trash in code",
     "status": 3,
+    "project": 1,
     "created_date": "2023-12-14T18:40:55.294Z",
     "updated_date": "2023-12-19T07:08:04.243Z",
     "type": [
@@ -95,6 +98,7 @@
     "summary": "Make dinner",
     "description": "cookced dinner at 8:00,  for my family and cousins",
     "status": 2,
+    "project": 1,
     "created_date": "2023-12-14T18:42:55.579Z",
     "updated_date": "2023-12-19T07:23:36.462Z",
     "type": [
@@ -109,11 +113,22 @@
     "summary": "Repair the car",
     "description": "I'm fixing the car so that it drives well and not just drives, but flies.",
     "status": 2,
+    "project": 1,
     "created_date": "2023-12-14T18:47:26.091Z",
     "updated_date": "2023-12-19T07:23:31.148Z",
     "type": [
       2
     ]
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 1,
+  "fields": {
+    "name": "Project59",
+    "description": "Something else",
+    "start_date": "2023-12-25",
+    "end_date": "2023-12-26"
   }
 }
 ]
