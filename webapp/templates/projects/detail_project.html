@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home page</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'create_task' project.pk %}">Add Task</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'update_project' project.pk %}">Redact Project</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'delete_project' project.pk %}">Delete Project</a>
+{% endblock %}
+
+<title>{% block title %}Details{% endblock %}</title>
+
+{% block content %}
+    <h1 style="margin-top: 50px; margin-bottom: 50px">Details for project:</h1>
+    <div class="card border-dark mb-3" style="max-width: 18rem;">
+        <div class="card-header bg-transparent border-dark"><b>{{ project.name }}</b></div>
+        <div class="card-body">
+            <h5 class="card-title">Description: {{ project.description }}</h5>
+            <h6 class="card-text">Start date: {{ project.start_date }}</h6>
+        </div>
+        <div class="card-footer bg-transparent border-success"><b>End date: {{ project.end_date|default:" - " }}</b></div>
+    </div>
+    <h1>Tasks:</h1>
+    <div class="row row-cols-5">
+        {% for task in project.task_set.all %}
+            <div class="col">
+                <div class="card mb-3" style="width: 18rem; border-radius: 5px; border: 3px solid black">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ task.summary }}</h4>
+                        <h6 class="card-text">Type: {% for type in task.type.all %}
+                            {{ type.name }}{% if forloop.last %}.{% else %},{% endif %}
+                        {% endfor %}
+                        </h6>
+                        <h6 class="card-text">Status: {{ task.status.name }}</h6>
+                        <a href="{% url 'task_view' task.pk %}" class="btn btn-dark">See more</a>
+                        <a href="{% url 'update_task' project.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
+                    </div>
+                </div>
+            {% empty %}
+            <h5>Tasks Not Found :( </h5>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home page</a>
+{% endblock %}
+
+
+<title>{% block title %}Delete{% endblock %}</title>
+
+{% block content %}
+    <h1 style="margin-top: 50px; margin-bottom: 50px">Are you sure you want to delete!? </h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Yes</button>
+        <a class="btn btn-danger" href="{% url 'task_view' task.pk %}" role="button">No</a>
+    </form>
+{% endblock %}

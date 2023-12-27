@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home page</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'detail_project' task.project.pk %}">On Projects</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'create_task' task.pk %}">Add Task</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'update_task' task.pk %}">Redact</a>
+    <span style="margin-top: 8px">|</span>
+    <a class="nav-link active" aria-current="page" href="{% url 'delete_task' task.pk %}">Delete</a>
+{% endblock %}
+
+<title>{% block title %}Details{% endblock %}</title>
+
+{% block content %}
+    <h1 style="margin-top: 50px; margin-bottom: 50px">Details:</h1>
+    <div class="card border-dark mb-3" style="max-width: 18rem;">
+        <div class="card-header bg-transparent border-dark"><b>{{ task.summary }}</b></div>
+        <div class="card-body">
+            <h5 class="card-title">{{ task.description }}</h5>
+            <h6 class="card-text">Type: {% for type in task.type.all %}
+                {{ type.name }}{% if forloop.last %}.{% else %},{% endif %}
+            {% endfor %}
+            </h6>
+            <h6 class="card-text">Status: {{ task.status.name }}</h6>
+        </div>
+        <div class="card-footer bg-transparent border-success"><b>{{ task.created_date }}</b></div>
+    </div>
+{% endblock %}

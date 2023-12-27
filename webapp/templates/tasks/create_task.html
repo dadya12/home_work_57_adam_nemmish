@@ -8,7 +8,7 @@
 
 {% block content %}
 <h1 style="margin-top: 50px; margin-bottom: 50px">Add new Task</h1>
-<form method="post" action="{% url 'create_task' %}">
+<form method="post" action="">
     {% include 'partial/create_update_form.html' with value_submit='Добавить' %}
 </form>
 {% endblock %}
