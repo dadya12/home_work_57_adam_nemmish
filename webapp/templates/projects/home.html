@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-    <a class="nav-link active" aria-current="page" href="{% url 'create_project' %}">Add Project</a>
+    <a class="nav-link active" aria-current="page" href="{% url 'webapp:create_project' %}">Add Project</a>
 {% endblock %}
 
 <title>{% block title %}Project{% endblock %}</title>
@@ -24,8 +24,8 @@
                         <h6 class="card-text">Description: {{ project.description }}</h6>
                         <h5 class="card-text">Start date: {{ project.start_date }}</h5>
                         <h5 class="card-text">End date: {{ project.end_date|default:" - " }}</h5>
-                        <a href="{% url 'detail_project' project.pk %}" class="btn btn-dark">See more</a>
-                        <a href="{% url 'update_project' project.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
+                        <a href="{% url 'webapp:detail_project' project.pk %}" class="btn btn-dark">See more</a>
+                        <a href="{% url 'webapp:update_project' project.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
                     </div>
                 </div>
             {% empty %}

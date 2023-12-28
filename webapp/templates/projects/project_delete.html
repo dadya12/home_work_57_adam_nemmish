@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-    <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home page</a>
+    <a class="nav-link active" aria-current="page" href="{% url 'webapp:home' %}">Home page</a>
 {% endblock %}
 
 
@@ -12,6 +12,6 @@
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-success">Yes</button>
-        <a class="btn btn-danger" href="{% url 'detail_project' project.pk %}" role="button">No</a>
+        <a class="btn btn-danger" href="{% url 'webapp:detail_project' project.pk %}" role="button">No</a>
     </form>
 {% endblock %}
