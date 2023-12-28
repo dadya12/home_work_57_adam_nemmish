@@ -1,10 +1,10 @@
 from urllib.parse import urlencode
-from django.shortcuts import reverse
+from django.shortcuts import reverse, redirect
 from django.db.models import Q
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
 from webapp.forms import SimpleSearchForm, ProjectForm
 from webapp.models import Project
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class ProjectListView(ListView):
@@ -42,11 +42,11 @@ class ProjectListView(ListView):
         return context
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     template_name = 'projects/detail_project.html'
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     template_name = 'projects/create_project.html'
     form_class = ProjectForm
@@ -54,7 +54,7 @@ class ProjectCreateView(CreateView):
     def get_success_url(self):
         return reverse('webapp:detail_project', kwargs={'pk': self.object.pk})
 
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     model = Project
     template_name = 'projects/project_update.html'
     form_class = ProjectForm

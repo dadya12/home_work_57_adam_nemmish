@@ -26,7 +26,7 @@ class Task(models.Model):
     description = models.TextField(verbose_name='Полное описание', max_length=500, null=True, blank=True, validators=[validate_description])
     status = models.ForeignKey('webapp.Status', verbose_name='Статус', on_delete=models.RESTRICT)
     type = models.ManyToManyField('webapp.Type', related_name='tasks', verbose_name='Тип')
-    project = models.ForeignKey('webapp.Project', on_delete=models.PROTECT, verbose_name='Проект')
+    project = models.ForeignKey('webapp.Project', on_delete=models.CASCADE, verbose_name='Проект')
     created_date = models.DateTimeField(verbose_name='Дата и время создания', auto_now_add=True)
     updated_date = models.DateTimeField(verbose_name='Дата и время обновления', auto_now=True)
 
