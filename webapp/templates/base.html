@@ -22,7 +22,10 @@
       <span style="margin-top: 8px">|</span>
       <a class="nav-link active" aria-current="page">{{ request.user }}</a>
       <span style="margin-top: 8px">|</span>
-      <a class="nav-link active" aria-current="page" href="{% url 'accounts:logout' %}">Выйти</a>
+      <form method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+      <button type="sumbit" style="border: none; outline: none; margin-top: 8px; background: transparent">Выйти</button>
+      </form>
       {% endif %}
       </div>
     </div>
