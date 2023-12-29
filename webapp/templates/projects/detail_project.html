@@ -35,7 +35,7 @@
                         </h6>
                         <h6 class="card-text">Status: {{ task.status.name }}</h6>
                         <a href="{% url 'webapp:task_view' task.pk %}" class="btn btn-dark">See more</a>
-                        <a href="{% url 'webapp:update_task' project.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
+                        <a href="{% url 'webapp:update_task' task.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
                     </div>
                 </div>
             {% empty %}

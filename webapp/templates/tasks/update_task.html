@@ -3,7 +3,7 @@
 {% block navbar %}
     <a class="nav-link active" aria-current="page" href="{% url 'webapp:home' %}">Home page</a>
     <span style="margin-top: 8px">|</span>
-    <a class="nav-link active" aria-current="page" href="{% url 'webapp:detail_project' task.pk %}">On Projects</a>
+    <a class="nav-link active" aria-current="page" href="{% url 'webapp:detail_project' task.project.pk %}">On Projects</a>
 {% endblock %}
 
     <title>{% block title %}Update{% endblock %}</title>
