@@ -15,6 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto">
           {% block navbar %}{% endblock %}
+      <a class="nav-link active" aria-current="page" href="{% url 'accounts:user_create' %}">Регистрация</a>
       {% if not request.user.is_authenticated %}
       <span style="margin-top: 8px">|</span>
       <a class="nav-link active" aria-current="page" href="{% url 'accounts:login' %}">Войти</a>
