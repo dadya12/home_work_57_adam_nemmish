@@ -1,8 +1,9 @@
 from urllib.parse import urlencode
 from django.shortcuts import reverse, redirect
 from django.db.models import Q
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
-from webapp.forms import SimpleSearchForm, ProjectForm
+from webapp.forms import SimpleSearchForm, ProjectForm, ProjectUserForm
 from webapp.models import Project
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -42,17 +43,29 @@ class ProjectListView(ListView):
         return context
 
 
-class ProjectDetailView(LoginRequiredMixin, DetailView):
+class ProjectDetailView(DetailView):
     model = Project
     template_name = 'projects/detail_project.html'
+    context_object_name = 'project'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = self.get_object()
+
+        context['tasks'] = project.task_set.all()
+        return context
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     template_name = 'projects/create_project.html'
     form_class = ProjectForm
 
-    def get_success_url(self):
-        return reverse('webapp:detail_project', kwargs={'pk': self.object.pk})
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        response = super().form_valid(form)
+        form.instance.users.add(self.request.user)
+        return response
+
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     model = Project
@@ -62,11 +75,25 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('webapp:home')
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     model = Project
     template_name = 'projects/project_delete.html'
 
     def get_success_url(self):
         return reverse('webapp:home')
+
+
+class UpdateUserView(UpdateView):
+    model = Project
+    form_class = ProjectUserForm
+    template_name = 'update_user.html'
+    context_object_name = 'project'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('webapp:detail_project', kwargs={'pk': self.object.pk})
 
 

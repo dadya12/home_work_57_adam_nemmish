@@ -27,6 +27,14 @@
                         <a href="{% url 'webapp:detail_project' project.pk %}" class="btn btn-dark">See more</a>
                         <a href="{% url 'webapp:update_project' project.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
                     </div>
+                    <span style="color: midnightblue;">
+                    Пользователь:
+                    {% for user in project.users.all %}
+                        {{ user.username }}
+                        {% if not forloop.last %},
+                        {% endif %}
+                    {% endfor %}
+                </span>
                 </div>
             {% empty %}
             <h5>Project Not Found :( </h5>

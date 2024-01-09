@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+from django.shortcuts import reverse
 
 class Type(models.Model):
     name = models.CharField(verbose_name='Название', max_length=150)
@@ -33,8 +35,12 @@ class Task(models.Model):
 class Project(models.Model):
     name = models.CharField(verbose_name='Название', max_length=250)
     description = models.TextField(verbose_name='Опсиание', max_length=400, )
+    users = models.ManyToManyField(get_user_model(), related_name='projects', verbose_name='Пользователи', null=True, blank=True)
     start_date = models.DateField(verbose_name='Дата начала')
     end_date = models.DateField(verbose_name='Дата конца', blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('webapp:detail_project', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.name

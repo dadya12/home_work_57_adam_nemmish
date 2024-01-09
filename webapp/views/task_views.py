@@ -3,12 +3,13 @@ from webapp.models import Task, Project
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import TaskForm
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/task_view.html'
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskForm
     template_name = 'tasks/create_task.html'
 
@@ -27,7 +28,7 @@ class TaskDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('webapp:detail_project', kwargs={'pk': self.object.project.pk})
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/update_task.html'

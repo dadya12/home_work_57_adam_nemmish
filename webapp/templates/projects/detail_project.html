@@ -14,6 +14,17 @@
 
 {% block content %}
     <h1 style="margin-top: 50px; margin-bottom: 50px">Details for project:</h1>
+
+    <div>
+      <b>Пользователи:</b>
+    <ul>
+        {% for user in project.users.all %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    <a class="btn btn-dark mb-3" href="{% url 'webapp:update_user' pk=project.pk %}">Изменить</a>
+    </div>
+
     <div class="card border-dark mb-3" style="max-width: 18rem;">
         <div class="card-header bg-transparent border-dark"><b>{{ project.name }}</b></div>
         <div class="card-body">
