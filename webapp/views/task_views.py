@@ -3,15 +3,16 @@ from webapp.models import Task, Project
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import TaskForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/task_view.html'
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(PermissionRequiredMixin, CreateView):
     form_class = TaskForm
     template_name = 'tasks/create_task.html'
+    permission_required = 'webapp.add_task'
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
@@ -21,17 +22,20 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         form.save_m2m()
         return redirect('webapp:detail_project', pk=project.pk)
 
-class TaskDeleteView(DeleteView):
+
+class TaskDeleteView(PermissionRequiredMixin, DeleteView):
     model = Task
     template_name = 'tasks/task_delete.html'
+    permission_required = 'webapp.delete_task'
 
     def get_success_url(self):
         return reverse('webapp:detail_project', kwargs={'pk': self.object.project.pk})
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(PermissionRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/update_task.html'
+    permission_required = 'webapp.update_task'
 
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})

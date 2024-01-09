@@ -1,11 +1,11 @@
 from urllib.parse import urlencode
-from django.shortcuts import reverse, redirect
+from django.shortcuts import reverse, redirect, get_object_or_404
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from webapp.forms import SimpleSearchForm, ProjectForm, ProjectUserForm
 from webapp.models import Project
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 class ProjectListView(ListView):
@@ -55,10 +55,11 @@ class ProjectDetailView(DetailView):
         context['tasks'] = project.task_set.all()
         return context
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     model = Project
     template_name = 'projects/create_project.html'
     form_class = ProjectForm
+    permission_required = 'webapp.add_project'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -67,10 +68,15 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
         return response
 
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
     model = Project
     template_name = 'projects/project_update.html'
     form_class = ProjectForm
+    permission_required = 'webapp.change_project'
+
+    def has_permission(self):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
+        return super().has_permission() and self.request.user in project.users.all() or self.request.user == self.get_object().users
 
     def get_success_url(self):
         return reverse('webapp:home')
@@ -83,7 +89,7 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
         return reverse('webapp:home')
 
 
-class UpdateUserView(UpdateView):
+class UpdateUserView(LoginRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectUserForm
     template_name = 'update_user.html'

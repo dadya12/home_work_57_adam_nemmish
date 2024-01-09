@@ -2,12 +2,18 @@
 
 {% block navbar %}
     <a class="nav-link active" aria-current="page" href="{% url 'webapp:home' %}">Home page</a>
+    {% if perms.webapp.add_task and request.user in project.users.all%}
     <span style="margin-top: 8px">|</span>
     <a class="nav-link active" aria-current="page" href="{% url 'webapp:create_task' project.pk %}">Add Task</a>
+    {% endif %}
+    {% if perms.webapp.change_project and request.user in project.users.all%}
     <span style="margin-top: 8px">|</span>
     <a class="nav-link active" aria-current="page" href="{% url 'webapp:update_project' project.pk %}">Redact Project</a>
+    {% endif %}
+    {% if perms.webapp.delete_project and request.user in project.users.all%}
     <span style="margin-top: 8px">|</span>
     <a class="nav-link active" aria-current="page" href="{% url 'webapp:delete_project' project.pk %}">Delete Project</a>
+    {% endif %}
 {% endblock %}
 
 <title>{% block title %}Details{% endblock %}</title>
@@ -22,7 +28,9 @@
             <li>{{ user.username }}</li>
         {% endfor %}
     </ul>
+    {% if perms.webapp.change_project and request.user in project.users.all%}
     <a class="btn btn-dark mb-3" href="{% url 'webapp:update_user' pk=project.pk %}">Изменить</a>
+    {% endif %}
     </div>
 
     <div class="card border-dark mb-3" style="max-width: 18rem;">

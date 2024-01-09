@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
+    {% if perms.webapp.add_project%}
     <a class="nav-link active" aria-current="page" href="{% url 'webapp:create_project' %}">Add Project</a>
+    {% endif %}
 {% endblock %}
 
 <title>{% block title %}Project{% endblock %}</title>
@@ -25,7 +27,9 @@
                         <h5 class="card-text">Start date: {{ project.start_date }}</h5>
                         <h5 class="card-text">End date: {{ project.end_date|default:" - " }}</h5>
                         <a href="{% url 'webapp:detail_project' project.pk %}" class="btn btn-dark">See more</a>
+                        {% if perms.webapp.change_project and request.user in project.users.all%}
                         <a href="{% url 'webapp:update_project' project.pk %}" class="btn btn-dark" style="margin-left: 20px;">Redact</a>
+                        {% endif %}
                     </div>
                     <span style="color: midnightblue;">
                     Пользователь:
